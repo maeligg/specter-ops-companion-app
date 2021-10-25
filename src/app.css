@@ -1,0 +1,135 @@
+@import '@fontsource/fira-mono';
+
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+:root {
+	font-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--font-mono: 'Fira Mono', monospace;
+	--white: #ffffff;
+	--white-transparent: hsla(0, 0%, 100%, .7);
+	--dark-grey: hsl(0, 0%, 20%);
+	--light-grey: hsl(0, 0%, 50%);
+	--primary-color: hsl(360, 63%, 40%);
+	--primary-color-transparent: hsla(360, 63%, 40%, .7);
+	--secondary-color: hsl(47, 60%, 38%);
+	--secondary-color-transparent: hsla(47, 60%, 38%, .7);
+	--tertiary-color: hsl(236, 11%, 28%);
+}
+
+html, body {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	background-color: var(--dark-grey);
+	background-image: url('/img/bg.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	color: var(--white);
+}
+
+#svelte {
+	min-height: 100%;
+}
+
+h1,
+h2 {
+	font-weight: 600;
+}
+
+p {
+	line-height: 1.5;
+}
+
+a {
+	color: var(--white);
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1 {
+	margin: 4rem 0;
+	font-size: 2.5rem;
+	text-align: center;
+}
+
+h2 {
+	font-size: 2rem;
+}
+
+p, li {
+	line-height: 1.5;
+}
+
+details, summary {
+	margin: 1rem 0;
+}
+
+pre {
+	font-size: 16px;
+	font-family: var(--font-mono);
+	background-color: rgba(255, 255, 255, 0.45);
+	border-radius: 3px;
+	box-shadow: 2px 2px 6px rgb(255 255 255 / 25%);
+	padding: 0.5em;
+	overflow-x: auto;
+}
+
+input,
+button {
+	font-size: inherit;
+	font-family: inherit;
+}
+
+button:focus:not(:focus-visible) {
+	outline: none;
+}
+
+.button--primary, .button {
+	display: inline-flex;
+	align-items: center;
+	padding: .4rem .8rem;
+	border-radius: 6px;
+	/* font-size: clamp(.8rem, .5rem + 2vw, 1.2rem); */
+	color: var(--white);
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.button--primary:hover, .button:hover {
+	text-decoration: none;
+}
+
+.button--primary svg, .button svg {
+	margin-right: 10px;
+}
+
+.button--primary {
+	background-color: var(--primary-color-transparent);
+	border: 1px solid var(--primary-color);
+}
+
+.button {
+	background-color: var(--secondary-color-transparent);
+	border: 1px solid var(--secondary-color);
+}
+
+.button--large {
+	padding: .5rem 1rem;
+	font-size: 1.2rem;
+	text-align: center;
+}
+
+.container {
+	width: 100%;
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
