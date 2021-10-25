@@ -28,7 +28,7 @@
 		<li>Keep track of your health points and completed objectives</li>
 	</ul>
 
-	<p>For any questions or suggestions about the app, you can contact me at maelbrunet[at]gmail.com or if you're on Twitter at <a href="https://twitter.com/MaelB">@maelb</a>. The app is and will continue to be 100% ad and tracker free. If you'd like to thank or help me to continue maintaining this app (and other boardgame companion apps), please consider buying me a coffee :</p>
+	<p>For any questions or suggestions about the app, please <a href="https://github.com/maeligg/specter-ops-companion-app/issues">open an issue</a> on GitHub. The app is and will continue to be 100% ad and tracker free. If you'd like to thank or help me to continue maintaining this app (and other boardgame companion apps), please consider buying me a coffee :</p>
 
 	<a href="https://www.buymeacoffee.com/maelig" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 145px !important;" ></a>
 
