@@ -57,6 +57,7 @@
         [406, 408, 410, 412, 366, 319]
     ];
     let validMoves = [];
+    let lastSeen;
     let moveHistory = [13];
     let hunterLineOfSight = [];
     let placingHunters = false;
@@ -255,12 +256,7 @@
         if (placingHunters) {
             placeHunter(i)
         } else {
-            if (board[i] === 'oi' && (
-                board.indexOf('a') === i - 1 ||
-                board.indexOf('a') === i + 1 ||
-                board.indexOf('a') >= i - 24 && board.indexOf('a') <= i - 22 ||
-                board.indexOf('a') >= i + 22 && board.indexOf('a') <= i + 24
-            )) {
+            if (board[i] === 'oi') {
                 board[i] = 'oc';
                 board = board;
             } else if (board[i] === 'oc') {
