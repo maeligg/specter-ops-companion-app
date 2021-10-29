@@ -362,7 +362,7 @@
 
                     <!-- Exits -->
                     {#if exits.includes(i)}
-                        <div class="exit" />
+                        <img class="exit" src="img/exit.svg" alt="Exit" />
                     {/if}
 
                     <!-- Objects -->
@@ -508,10 +508,6 @@
 
     .wall {
         background-color: var(--dark-grey);
-    }
-
-    .exit {
-        background-color: hsla(47, 80%, 75%, .5);
     }
 
     .valid-move {
