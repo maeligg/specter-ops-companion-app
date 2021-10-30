@@ -1,7 +1,7 @@
 {
   "name": "Specter Ops companion app",
   "short_name": "Specter Ops companion app",
-  "theme_color": "#138e69",
+  "theme_color": "#a62626",
   "background_color": "#333333",
   "display": "standalone",
   "Scope": "/",
