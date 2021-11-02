@@ -270,6 +270,10 @@
 </script>
 
 <main>
+    <div class="rotate-device">
+        <img src="/img/rotate-device.svg" alt="Rotate device">
+        <p>It looks like you're on a device with a small screen (maybe a phone ?). We recommend using the app in landscape mode.</p>
+    </div>
     {#if !numPlayersConfirmed}
         <h1>Number of players</h1>
 
@@ -405,6 +409,23 @@
 <style>
     main {
         padding: 1rem;
+    }
+
+    .rotate-device {
+        display: none;
+        position: fixed;
+        inset: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+        background-color: var(--dark-grey);
+    }
+
+    @media screen and (orientation: portrait) and (max-width: 500px) {
+        .rotate-device {
+            display: flex;
+        }
     }
 
     .container {
