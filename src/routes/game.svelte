@@ -1,64 +1,17 @@
 <script>
     import '../app.css';
-    import InfoPanel from '../lib/InfoPanel.svelte';
+    import InfoPanel from '../components/InfoPanel.svelte';
+    import * as shadowsOfBabelInfo from '../shadowsOfBabel';
+    import * as brokenCovenantInfo from '../brokenCovenant';
 
+    let game, board, roadSegments, exits, extraExits, sectorObjectives, compass, fourHuntersStartingPosition;
+    let gameBoardSelected = false;
     let agent = '';
     let numPlayers;
     let numPlayersConfirmed = false;
     let objectivesPlaced = false;
-    let board = [
-        ' ', ' ', '.', ' ', '.', ' ', '.', ' ', '.', ' ', '.', ' ', ' ', 'a', ' ', ' ', ' ', ' ', '.', '.', '.', '.', '.',
-        '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', '.', ' ', ' ', ' ', '.', '.', ' ', '.', '.', '.', ' ',
-        ' ', ' ', '.', '.', ' ', '.', ' ', '.', '.', ' ', ' ', ' ', '.', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        '.', ' ', '.', ' ', ' ', ' ', ' ', ' ', '.', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', '.', ' ', '.', '.',
-        ' ', ' ', ' ', ' ', '.', ' ', '.', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        ' ', '.', '.', ' ', '.', ' ', '.', '.', ' ', '.', ' ', '.', '.', ' ', ' ', ' ', ' ', '.', '.', ' ', '.', '.', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', '.', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', '.', ' ', '.',
-        '.', ' ', '.', '.', ' ', '.', ' ', '.', '.', ' ', '.', ' ', '.', ' ', ' ', '.', ' ', '.', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', '.', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', '.', ' ',
-        ' ', '.', ' ', ' ', ' ', '.', ' ', ' ', ' ', '.', '.', ' ', '.', ' ', ' ', '.', '.', ' ', '.', '.', ' ', '.', ' ',
-        ' ', '.', ' ', '.', ' ', ' ', ' ', '.', ' ', '.', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        '.', ' ', '.', ' ', '.', '.', '.', ' ', '.', '.', ' ', '.', '.', ' ', ' ', '.', '.', ' ', '.', ' ', '.', ' ', '.',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', '.', ' ', '.', '.', ' ', '.', ' ',
-        '.', ' ', '.', ' ', '.', ' ', '.', ' ', '.', ' ', ' ', '.', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', '.', ' ', ' ', ' ', '.', ' ', '.', ' ', '.', ' ', '.', ' ',
-        ' ', '.', ' ', '.', ' ', '.', '.', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', '.', ' ', ' ', '.', ' ', '.', '.', ' ', '.', ' ', '.', ' ', '.', ' ', '.',
-        '.', ' ', '.', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        '.', ' ', '.', ' ', '.', '.', ' ', '.', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', '.', ' ', '.', ' ', '.', '.', ' ', '.', '.', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ',
-        ' ', '.', '.', ' ', '.', '.', ' ', '.', '.', ' ', ' ', ' ', ' ', '.', '.', ' ', '.', ' ', ' ', ' ', '.', ' ', '.',
-        ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', '.', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ',
-        '.', ' ', ' ', ' ', '.', ' ', '.', ' ', '.', ' ', ' ', '.', '.', ' ', ' ', ' ', '.', ' ', '.', '.', ' ', '.', ' ',
-        '.', ' ', '.', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ',
-        ' ', ' ', ' ', ' ', '.', ' ', '.', ' ', ' ', ' ', ' ', '.', ' ', '.', '.', ' ', '.', ' ', '.', '.', ' ', ' ', ' ',
-        ' ', '.', ' ', '.', '.', ' ', ' ', ' ', '.', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', ' ', ' ', ' ', ' ', ' ', '.', ' ', '.', ' ', '.', ' ', '.', ' ', ' ', ' ',
-        ' ', '.', '.', ' ', '.', ' ', '.', ' ', '.', ' ', ' ', '.', ' ', ' ', ' ', '.', ' ', ' ', ' ', '.', ' ', '.', ' ',
-    ];
-    const roadSegments = [
-        [13, 14, 36, 37, 59, 60, 82, 83, 105, 106, 128, 129, 151, 152, 174, 175, 197, 198, 220, 221, 243, 244, 266, 267, 289, 290, 312, 313, 335, 336, 358, 359],
-        [138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175],
-        [266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298],
-        [322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359],
-        [331, 332, 354, 355, 377, 378, 400, 401, 423, 424, 446, 447, 469, 470, 492, 493, 515, 516, 538, 539, 561, 562, 584, 585, 607, 608, 630, 631, 653, 654, 676, 677, 699, 700, 722, 723],
-        [469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505],
-        [506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539]
-    ];
-    let exits = [13, 46, 68];
-    const sectorObjectives = [
-        [415, 370, 417, 301, 235, 260],
-        [668, 623, 602, 604, 650, 675],
-        [703, 568, 660, 707, 572, 688],
-        [406, 408, 410, 412, 366, 319]
-    ];
     let validMoves = [];
-    let lastSeen;
-    let moveHistory = [13];
+    let moveHistory = [];
     let hunterLineOfSight = [];
     let placingHunters = false;
 
@@ -67,18 +20,21 @@
         sectorObjectives.forEach(sector => {
             const selectedObjective = sector[Math.floor(Math.random() * sector.length)];
             board[selectedObjective] = 'oi';
+            board[sector] = 'oi';
             board = board;
         });
 
         // Place hunters starting position
-        board[numPlayers === 4 ? 516 : 378] = 'h';
+        board[numPlayers === 4 ? fourHuntersStartingPosition : 378] = 'h';
         board = board;
 
         // Place additional exit
-        if (numPlayers === 4) {
-            exits.push(7);
-            exits = exits;
+        if (numPlayers === 4 || numPlayers === 5) {
+            exits = [...exits, ...extraExits]; 
         }
+
+        // Log initial agent position
+        moveHistory = [board.indexOf('a')];
 
         // Moves and LoS
         getValidMoves();
@@ -195,6 +151,7 @@
     const getHunterLineOfSight = () => {
         const obstacles = ['.', 'h', 'oi', 'oc'];
         const hunterPositions = board.map((cell, i) => cell === 'h' ? i : '').filter(String);
+        hunterLineOfSight = [...hunterPositions];
 
         hunterPositions.forEach(hunterPosition => {
             let northVisible = true;
@@ -256,15 +213,42 @@
         if (placingHunters) {
             placeHunter(i)
         } else {
-            if (board[i] === 'oi') {
-                board[i] = 'oc';
-                board = board;
-            } else if (board[i] === 'oc') {
-                board[i] = 'oi';
-                board = board;
-            } else {
-                updateAgentPosition(i)
+            switch (board[i]) {
+                case 'oi':
+                    board[i] = 'oc';
+                    break;
+                case 'oc':
+                    board[i] = 'oi';
+                    break;
+                case 'ct':
+                    board[i] = 'ctu';
+                    break;
+                case 'cr':
+                    board[i] = 'cru';
+                    break;
+                case 'cb':
+                    board[i] = 'cbu';
+                    break;
+                case 'cl':
+                    board[i] = 'clu';
+                    break;
+                case 'ctu':
+                    board[i] = 'ct';
+                    break;
+                case 'cru':
+                    board[i] = 'cr';
+                    break;
+                case 'cbu':
+                    board[i] = 'cb';
+                    break;
+                case 'clu':
+                    board[i] = 'cl';
+                    break;
+                default:
+                    updateAgentPosition(i);
             }
+
+            board = board;
         }
     }
 </script>
@@ -274,7 +258,35 @@
         <img src="/img/rotate-device.svg" alt="Rotate device">
         <p>It looks like you're on a device with a small screen (maybe a phone ?). We recommend using the app in landscape mode.</p>
     </div>
-    {#if !numPlayersConfirmed}
+    {#if !gameBoardSelected}
+        <h1>Choose your board</h1>
+
+        <ul class="game-board-wrapper">
+            <li>
+                <button on:click={() => {
+                    game = 'shadowsOfBabel';
+                    ({board, roadSegments, exits, extraExits, sectorObjectives, compass, fourHuntersStartingPosition} = shadowsOfBabelInfo);
+                    gameBoardSelected = true;
+                }}>
+                    <img src="img/shadows-of-babel.jpg" alt="Shadows of Babel" width="300" height="300" />
+                </button>
+
+                <p>Shadows of Babel (original game)</p>
+            </li>
+    
+            <li>
+                <button on:click={() => {
+                    game = 'brokenCovenant';
+                    ({board, roadSegments, exits, extraExits, sectorObjectives, compass, fourHuntersStartingPosition} = brokenCovenantInfo);
+                    gameBoardSelected = true;
+                }}>
+                    <img src="img/broken-covenant.jpg" alt="Broken Covenant" width="300" height="300" />
+                </button>
+
+                <p>Broken Covenant</p>
+            </li>
+        </ul>
+    {:else if !numPlayersConfirmed}
         <h1>Number of players</h1>
 
         <form on:submit={() => numPlayersConfirmed = true}>
@@ -340,6 +352,42 @@
                         Orangutan
                     </button>
                 </li>
+                <li>
+                    <button class="select-agent" on:click="{() => {
+                        agent = 'fox';
+                        setupGame();
+                    }}">
+                        <img src="img/fox.jpg" alt="Fox" width="100" height="100" />
+                        Fox
+                    </button>
+                </li>
+                <li>
+                    <button class="select-agent" on:click="{() => {
+                        agent = 'mantis';
+                        setupGame();
+                    }}">
+                        <img src="img/mantis.jpg" alt="Mantis" width="100" height="100" />
+                        Mantis
+                    </button>
+                </li>
+                <li>
+                    <button class="select-agent" on:click="{() => {
+                        agent = 'panther';
+                        setupGame();
+                    }}">
+                        <img src="img/panther.jpg" alt="Panther" width="100" height="100" />
+                        Panther
+                    </button>
+                </li>
+                <li>
+                    <button class="select-agent" on:click="{() => {
+                        agent = 'raven';
+                        setupGame();
+                    }}">
+                        <img src="img/raven.jpg" alt="Raven" width="100" height="100" />
+                        Raven
+                    </button>
+                </li>
             </ul>
         </div>
     {:else if !objectivesPlaced && numPlayers !== 4}
@@ -360,6 +408,16 @@
                         {getCellFromIndex(i)}
                     </span>
 
+                    <!-- Moves -->
+                    {#if validMoves.includes(i)}
+                        <div class="valid-move" />
+                    {/if}
+
+                    <!-- Hunter line of sight -->
+                    {#if hunterLineOfSight.includes(i)}
+                        <div class="line-of-sight" />
+                    {/if}
+
                     <!-- Exits -->
                     {#if exits.includes(i)}
                         <img class="exit" src="img/exit.svg" alt="Exit" />
@@ -376,20 +434,20 @@
                         <img class="agent" src="{`img/${agent}-thumbnail.jpg`}" alt={agent}>
                     {:else if cell === 'h'}
                         <div class="hunter">H</div>
-                    {/if}
-
-                    <!-- Moves -->
-                    {#if validMoves.includes(i) && cell !== 'a'}
-                        <div class="valid-move" />
-                    {/if}
-
-                    <!-- Hunter line of sight -->
-                    {#if hunterLineOfSight.includes(i)}
-                        <div class="line-of-sight" />
+                    {:else if cell === 'cb'}
+                        <img class="cache" src="img/cache.svg" alt="Supply cache below this tile" />
+                    {:else if cell === 'cl'}
+                        <img class="cache cache-left" src="img/cache.svg" alt="Supply cache left of this tile" />
+                    {:else if cell === 'cr'}
+                        <img class="cache cache-right" src="img/cache.svg" alt="Supply cache right of this tile" />
+                    {:else if cell === 'ct'}
+                        <img class="cache cache-top" src="img/cache.svg" alt="Supply cache top of this tile" />
+                    {:else if cell === 'ctu' || cell === 'cru' || cell === 'cbu' || cell === 'clu'}
+                        <img class="cache cache-used" src="img/cache-used.svg" alt="Used supply cached next to this tile" />
                     {/if}
 
                     <!-- Compass -->
-                    {#if i === 239}
+                    {#if i === compass}
                         <img class="compass" src="{`img/compass.png`}" alt="compass">
                     {/if}
                 </button>
@@ -433,6 +491,25 @@
         max-width: 400px;
         margin: 0 auto;
         padding: 0 1rem;
+    }
+
+    .game-board-wrapper {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .game-board-wrapper li {
+        text-align: center;
+    }
+
+    .game-board-wrapper button {
+        padding: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
     }
 
     .players-wrapper, .agent-wrapper {
@@ -500,7 +577,7 @@
         transform: translate(-50%, -50%);
     }
 
-    .agent, .hunter, .exit, .objective-incomplete, .objective-complete, .wall, .valid-move, .line-of-sight {
+    .agent, .hunter, .exit, .objective-incomplete, .objective-complete, .wall, .valid-move, .line-of-sight, .cache {
         position: absolute;
         inset: 0;
         width: 100%;
@@ -540,5 +617,21 @@
         inset: 0;
         width: calc(200% + 1px);
         z-index: 10;
+    }
+
+    .cache {
+        background-color: var(--dark-grey);
+    }
+
+    .cache.cache-top {
+        transform: rotate(180deg);
+    }
+
+    .cache.cache-left {
+        transform: rotate(90deg);
+    }
+
+    .cache.cache-right {
+        transform: rotate(-90deg);
     }
 </style>
