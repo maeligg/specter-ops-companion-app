@@ -25,7 +25,8 @@
 		<li>Visualise all allowed movements based on your current position</li>
 		<li>Keep a log of all your past movements</li>
 		<li>Visualise the hunter's line of sights based on their current positions</li>
-		<li>Keep track of your health points and completed objectives</li>
+		<li>Keep track of your health points, completed objectives, used supply caches (if any)</li>
+		<li>Can be installed on your device for easier and offline access</li>
 	</ul>
 
 	<p>For any questions or suggestions about the app, please <a href="https://github.com/maeligg/specter-ops-companion-app/issues">open an issue</a> on GitHub. The app is and will continue to be 100% ad and tracker free. If you'd like to thank or help me to continue maintaining this app (and other boardgame companion apps), please consider buying me a coffee :</p>
@@ -34,8 +35,8 @@
 
 	<h2>FAQ</h2>
 	<details>
-		<summary>Can I play with the Broken Covenant or the Artic Archives map / agents ?</summary>
-		Not yet, but I'm planning to add it very soon.
+		<summary>Can I play with the Artic Archives map ?</summary>
+		Not yet, I may add this later if there's any interest so please let me know.
 	</details>
 	<details>
 		<summary>Why is the hunters' car not displayed on the map ?</summary>
