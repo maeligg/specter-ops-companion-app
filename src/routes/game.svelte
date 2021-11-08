@@ -104,7 +104,7 @@
     }
 
     const placeHunter = (i) => {
-        if (board[i] !== '.' && board[i] !== 'a') {
+        if (board[i] !== '.' && board[i] !== 'a' && board[i] !== 'oi' && board[i] !== 'oc') {
             board[i] = 'h';
             board = board;
 
