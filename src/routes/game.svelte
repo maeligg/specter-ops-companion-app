@@ -4,7 +4,7 @@
     import * as shadowsOfBabelInfo from '../shadowsOfBabel';
     import * as brokenCovenantInfo from '../brokenCovenant';
 
-    let game, board, roadSegments, exits, extraExits, sectorObjectives, compass, fourHuntersStartingPosition;
+    let board, roadSegments, exits, extraExits, sectorObjectives, compass, fourHuntersStartingPosition;
     let gameBoardSelected = false;
     let agent = '';
     let numPlayers;
@@ -14,6 +14,8 @@
     let moveHistory = [];
     let hunterLineOfSight = [];
     let placingHunters = false;
+
+    const blockingObjects = ['.', 'a', 'oi', 'oc', 'ct', 'cl', 'cb', 'cr', 'ctu', 'clu', 'cbu', 'cru'];
 
     const setupGame = () => {
         // Place objectives
@@ -60,7 +62,7 @@
     }
 
     const placeHunter = (i) => {
-        if (board[i] !== '.' && board[i] !== 'a' && board[i] !== 'oi' && board[i] !== 'oc') {
+        if (!blockingObjects.includes(board[i])) {
             board[i] = 'h';
             board = board;
 
@@ -80,7 +82,7 @@
     }
 
     const calcValidSingleMove = (boardCells) => {
-        const obstacles = ['.', 'h', 'oi', 'oc'];
+        const obstacles = [...blockingObjects, 'h'];
 
         boardCells.forEach(cell => {
             // Left
@@ -149,7 +151,6 @@
     }
 
     const getHunterLineOfSight = () => {
-        const obstacles = ['.', 'h', 'oi', 'oc'];
         const hunterPositions = board.map((cell, i) => cell === 'h' ? i : '').filter(String);
         hunterLineOfSight = [...hunterPositions];
 
@@ -165,7 +166,7 @@
             let westLineOfSight = 1;
 
             while(westVisible) {
-                if ((hunterPosition - westLineOfSight + 1) % 23 !== 0 && !obstacles.includes(board[hunterPosition - westLineOfSight])) {
+                if ((hunterPosition - westLineOfSight + 1) % 23 !== 0 && !blockingObjects.includes(board[hunterPosition - westLineOfSight])) {
                     hunterLineOfSight = [...hunterLineOfSight, hunterPosition - westLineOfSight];
                     westLineOfSight++;
                 } else {
@@ -174,7 +175,7 @@
             }
 
             while(eastVisible) {
-                if ((hunterPosition + eastLineOfSight) % 23 !== 0 && !obstacles.includes(board[hunterPosition + eastLineOfSight])) {
+                if ((hunterPosition + eastLineOfSight) % 23 !== 0 && !blockingObjects.includes(board[hunterPosition + eastLineOfSight])) {
                     hunterLineOfSight = [...hunterLineOfSight, hunterPosition + eastLineOfSight];
                     eastLineOfSight++;
                 } else {
@@ -183,7 +184,7 @@
             }
 
             while(northVisible) {
-                if ((hunterPosition - northLineOfSight * 23) >= 0 && !obstacles.includes(board[hunterPosition - northLineOfSight * 23])) {
+                if ((hunterPosition - northLineOfSight * 23) >= 0 && !blockingObjects.includes(board[hunterPosition - northLineOfSight * 23])) {
                     hunterLineOfSight = [...hunterLineOfSight, hunterPosition - northLineOfSight * 23];
                     northLineOfSight++;
                 } else {
@@ -192,7 +193,7 @@
             }
 
             while(southVisible) {
-                if ((hunterPosition + southLineOfSight * 23) <= 32 * 23 && !obstacles.includes(board[hunterPosition + southLineOfSight * 23])) {
+                if ((hunterPosition + southLineOfSight * 23) <= 32 * 23 && !blockingObjects.includes(board[hunterPosition + southLineOfSight * 23])) {
                     hunterLineOfSight = [...hunterLineOfSight, hunterPosition + southLineOfSight * 23];
                     southLineOfSight++;
                 } else {
