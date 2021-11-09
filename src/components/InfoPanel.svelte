@@ -5,8 +5,9 @@
     export let placingHunters;
     export let togglePlacingHunters;
     export let numPlayers;
+    export let panelCollapsed;
+    export let togglePanel;
 
-    let panelCollapsed = false;
     let maxLife = 4;
     if (agent === 'orangutan') { maxLife += 2 };
     if (numPlayers === 4) { maxLife += 2 };
@@ -22,7 +23,7 @@
 </script>
 
 <div class="panel-wrapper" class:collapsed={panelCollapsed}>
-    <button class="toggle-panel" on:click={() => panelCollapsed = !panelCollapsed}>
+    <button class="toggle-panel" on:click={togglePanel}>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M2.2742 4.70021C1.76796 4.19397 0.947191 4.19397 0.440955 4.70021C-0.0652792 5.20644 -0.0652793 6.02721 0.440955 6.53345L9.08337 15.1759C9.50149 15.594 10.1342 15.6668 10.627 15.3942C10.7538 15.3327 10.8726 15.2493 10.9779 15.1441L19.6203 6.50167C20.1265 5.99544 20.1265 5.17467 19.6203 4.66843C19.1141 4.1622 18.2933 4.1622 17.7871 4.66843L10.0147 12.4408L2.2742 4.70021Z" fill="white"/>
         </svg>  

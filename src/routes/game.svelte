@@ -7,13 +7,14 @@
     let board, roadSegments, exits, extraExits, sectorObjectives, compass, fourHuntersStartingPosition;
     let gameBoardSelected = false;
     let agent = '';
-    let numPlayers;
+    let numPlayers = 3;
     let numPlayersConfirmed = false;
     let objectivesPlaced = false;
     let validMoves = [];
     let moveHistory = [];
     let hunterLineOfSight = [];
     let placingHunters = false;
+    let panelCollapsed = false;
 
     const blockingObjects = ['.', 'a', 'oi', 'oc', 'ct', 'cl', 'cb', 'cr', 'ctu', 'clu', 'cbu', 'cru'];
 
@@ -68,6 +69,10 @@
 
             getHunterLineOfSight();
         }
+
+        if (board.filter(cell => cell === 'h').length >= numPlayers - 1) {
+            togglePlacingHunters();
+        }
     }
 
     const togglePlacingHunters = () => {
@@ -76,6 +81,8 @@
         if (placingHunters) {
             board = [...board.map(cell => cell === 'h' ? ' ' : cell)];
             hunterLineOfSight = [];
+        } else {
+            panelCollapsed = true;
         }
 
         getValidMoves();
@@ -252,6 +259,8 @@
             board = board;
         }
     }
+
+    const togglePanel = () => panelCollapsed = !panelCollapsed;
 </script>
 
 <main>
@@ -265,7 +274,6 @@
         <ul class="game-board-wrapper">
             <li>
                 <button on:click={() => {
-                    game = 'shadowsOfBabel';
                     ({board, roadSegments, exits, extraExits, sectorObjectives, compass, fourHuntersStartingPosition} = shadowsOfBabelInfo);
                     gameBoardSelected = true;
                 }}>
@@ -277,7 +285,6 @@
     
             <li>
                 <button on:click={() => {
-                    game = 'brokenCovenant';
                     ({board, roadSegments, exits, extraExits, sectorObjectives, compass, fourHuntersStartingPosition} = brokenCovenantInfo);
                     gameBoardSelected = true;
                 }}>
@@ -461,6 +468,8 @@
             placingHunters={placingHunters}
             togglePlacingHunters={togglePlacingHunters}
             numPlayers={numPlayers}
+            panelCollapsed={panelCollapsed}
+            togglePanel={togglePanel}
         />
     {/if}
 </main>
