@@ -409,7 +409,7 @@
             <button class="button" on:click={() => objectivesPlaced = true}>Done</button>
         </div>
     {:else}
-        <div class="board">
+        <div class="board" class:panel-collapsed={panelCollapsed}>
             {#each board as cell, i}
                 <button class="cell" on:click={() => handleCellClick(i)}>
                     <span class="cell-inner">
@@ -557,11 +557,16 @@
 
     .board {
         max-width: 800px;
-        margin: 0 auto 80px;
+        margin: 0 auto;
+        margin-bottom: 330px;
         display: grid;
         grid-template-columns: repeat(23, 1fr);
         gap: 1px;
         background-color: var(--dark-grey);
+    }
+
+    .board.panel-collapsed {
+        margin-bottom: 80px;
     }
 
     .cell {
