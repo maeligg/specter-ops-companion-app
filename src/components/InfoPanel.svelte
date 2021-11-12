@@ -7,6 +7,7 @@
     export let numPlayers;
     export let panelCollapsed;
     export let togglePanel;
+    export let getValidMoves;
 
     let maxLife = 4;
     if (agent === 'orangutan') { maxLife += 2 };
@@ -37,6 +38,16 @@
             </svg>
             Undo last move
         </button>
+        <button class="button" on:click={() => {
+            getValidMoves(6);
+            togglePanel();
+        }}>Use Adrenal Surge (+ 2 on your next move)</button>
+        {#if agent === 'fox'}
+            <button class="button" on:click={() => {
+                getValidMoves(5);
+                togglePanel();
+            }}>Dash (+1 on your next move, become fatigued)</button>
+        {/if}
         <button class="button--primary" class:button={!placingHunters} on:click={togglePlacingHunters}>{placingHunters ? 'Finish placing hunters' : 'Place hunters on the board'}</button>
     </div>
     
@@ -72,6 +83,8 @@
         left: 0;
         bottom: 0;
         width: 100vw;
+        max-height: 100vh;
+        overflow-y: auto;
         padding: 0 1rem 1rem;
         background-color: var(--dark-grey);
         border-top: 1px solid var(--white);
@@ -106,6 +119,7 @@
         margin-bottom: 2rem;
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
         gap: 1rem;
     }
 

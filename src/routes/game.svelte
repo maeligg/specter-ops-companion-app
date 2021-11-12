@@ -81,9 +81,9 @@
         if (placingHunters) {
             board = [...board.map(cell => cell === 'h' ? ' ' : cell)];
             hunterLineOfSight = [];
-        } else {
-            panelCollapsed = true;
         }
+
+        panelCollapsed = true;
 
         getValidMoves();
     }
@@ -134,13 +134,12 @@
         })
     }
 
-    const getValidMoves = () => {
-        validMoves = [];
+    const getValidMoves = (numMoves = 4) => {
+        validMoves = [board.indexOf('a')];
 
-        calcValidSingleMove([board.indexOf('a')]);
-        calcValidSingleMove(validMoves);
-        calcValidSingleMove(validMoves);
-        calcValidSingleMove(validMoves);
+        for (let i = 0; i < numMoves; i++) {
+            calcValidSingleMove(validMoves);
+        }
     }
 
     const undoLastMove = () => {
@@ -470,6 +469,7 @@
             numPlayers={numPlayers}
             panelCollapsed={panelCollapsed}
             togglePanel={togglePanel}
+            getValidMoves={getValidMoves}
         />
     {/if}
 </main>
