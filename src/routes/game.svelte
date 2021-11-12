@@ -402,7 +402,7 @@
         <div class="container">
             <h1>Place objectives</h1>
 
-            <p>Place ojective tiles on the following spaces (picked randomly for each sector) :</p>
+            <p>Place objective tiles on the following spaces (picked randomly for each sector) :</p>
             <p>{board.map((cell, i) => cell === 'oi' ? getCellFromIndex(i) : '').filter(String).join(', ')}</p>
             <p>Note that the objectives are also shown directly on the map on the next screen, you may prefer to mark them that way.</p>
 
